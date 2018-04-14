@@ -1,0 +1,4 @@
+Bundle-Name: liferay-resources-installer
+Bundle-SymbolicName: be.gfi.liferay.liferay-resources-installer
+Bundle-Version: 1.0.0-SNAPSHOT
+-sources: true
