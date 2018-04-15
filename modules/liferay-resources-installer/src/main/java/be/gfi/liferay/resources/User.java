@@ -64,7 +64,6 @@ public class User {
     @Builder.Default private String uuid = StringPool.BLANK;
 
     public com.liferay.portal.kernel.model.User addUser() {
-
         if (Strings.isNullOrEmpty(password1) && Strings.isNullOrEmpty(password2)) {
             autoPassword = true;
         }

@@ -1,38 +1,37 @@
 package be.gfi.liferay;
 
-import be.gfi.liferay.resources.User;
+import be.gfi.liferay.management.user.UserManagement;
 import org.osgi.service.component.annotations.Component;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Component(immediate = true)
 public class LiferayResourceInstaller {
+
     private static Logger _logger;
+
+    private final UserManagement userManagement;
 
     public LiferayResourceInstaller() {
         _logger = LoggerFactory.getLogger(this.getClass().getName());
 
         _logger.info("Started");
 
-        createUsers();
+        userManagement = new UserManagement();
+
+        setup();
     }
 
-    private void createUsers() {
+    private void setup() {
+        _logger.info("Setup in progress...");
 
-        _logger.info("Creating users");
+        setupUserManagement();
 
-        com.liferay.portal.kernel.model.User user = User.builder()
-                .screenName("jdoe")
-                .emailAddress("j@doe.com")
-                .firstName("John")
-                .lastName("Doe")
-                .autoPassword(true)
-                .sendEmail(true)
-                .build()
-                .addUser();
+        _logger.info("Setup done");
+    }
 
-        if (user != null) {
-            _logger.info("User {} ({}) successfully created!", user.getScreenName(), user.getEmailAddress());
-        }
+    private void setupUserManagement() {
+        userManagement.deleteUsers(UserManagement.DELETE_ALL);
+        userManagement.createUsers();
     }
 }
