@@ -1,10 +1,10 @@
 package be.gfi.liferay.management.user;
 
 import be.gfi.liferay.utils.UserUtil;
-import com.liferay.portal.kernel.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 class DeleteUsersList {
 
@@ -27,19 +27,10 @@ class DeleteUsersList {
     }
 
     private List<com.liferay.portal.kernel.model.User> getUsersByScreenName() {
-        List<com.liferay.portal.kernel.model.User> users = new ArrayList<>();
-
-        for (String screenName : getUsersScreenName()) {
-            User user = UserUtil.getUserByScreenName(screenName);
-
-            if (user == null) {
-                continue;
-            }
-
-            users.add(user);
-        }
-
-        return users;
+        return getUsersScreenName()
+                .stream()
+                .map(UserUtil::getUserByScreenName)
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
     private List<com.liferay.portal.kernel.model.User> getUsersByEmail() {

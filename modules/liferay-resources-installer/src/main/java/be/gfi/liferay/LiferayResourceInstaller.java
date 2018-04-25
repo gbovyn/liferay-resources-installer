@@ -1,6 +1,9 @@
 package be.gfi.liferay;
 
+import be.gfi.liferay.management.site.SiteManagement;
 import be.gfi.liferay.management.user.UserManagement;
+import be.gfi.liferay.management.webcontent.WebContentManagement;
+import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import org.osgi.service.component.annotations.Component;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +14,8 @@ public class LiferayResourceInstaller {
     private static Logger _logger;
 
     private final UserManagement userManagement;
+    private final SiteManagement siteManagement;
+    private final WebContentManagement webContentManagement;
 
     public LiferayResourceInstaller() {
         _logger = LoggerFactory.getLogger(this.getClass().getName());
@@ -18,6 +23,8 @@ public class LiferayResourceInstaller {
         _logger.info("Started");
 
         userManagement = new UserManagement();
+        siteManagement = new SiteManagement();
+        webContentManagement = new WebContentManagement();
 
         setup();
     }
@@ -25,7 +32,11 @@ public class LiferayResourceInstaller {
     private void setup() {
         _logger.info("Setup in progress...");
 
-        setupUserManagement();
+        clearDbCache();
+
+        //setupUserManagement();
+        //setupSiteManagement();
+        setupWebContentManagement();
 
         _logger.info("Setup done");
     }
@@ -33,5 +44,20 @@ public class LiferayResourceInstaller {
     private void setupUserManagement() {
         userManagement.deleteUsers(UserManagement.DELETE_ALL);
         userManagement.createUsers();
+    }
+
+    private void setupSiteManagement() {
+        siteManagement.deleteSites();
+        siteManagement.createSites();
+    }
+
+    private void setupWebContentManagement() {
+        webContentManagement.createStructures();
+    }
+
+    private void clearDbCache() {
+        CacheRegistryUtil.clear();
+
+        _logger.info("All DB caches cleared");
     }
 }
