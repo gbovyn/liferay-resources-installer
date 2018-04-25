@@ -13,7 +13,7 @@ import java.util.List;
 
 public class UserUtil {
 
-    private static long DEFAULT_COMPANY_ID = PortalUtil.getDefaultCompanyId();
+    private static final long DEFAULT_COMPANY_ID = PortalUtil.getDefaultCompanyId();
 
     public static boolean alreadyExists(final String screenName, final String emailAddress) {
         return UserUtil.getUserByScreenName(screenName) != null
@@ -51,11 +51,11 @@ public class UserUtil {
     }
 
     public static Result<User> deleteAllUsers() {
-        List<User> deletedUsers = Lists.newArrayList();
-        List<User> notDeletedUsers = Lists.newArrayList();
+        final List<User> deletedUsers = Lists.newArrayList();
+        final List<User> notDeletedUsers = Lists.newArrayList();
 
         for (User user : getAllUsers()) {
-            Try<User> userDeleted = safeDeleteUser(user.getUserId());
+            final Try<User> userDeleted = safeDeleteUser(user.getUserId());
             if (userDeleted.isSuccess()) {
                 deletedUsers.add(
                         userDeleted.get()

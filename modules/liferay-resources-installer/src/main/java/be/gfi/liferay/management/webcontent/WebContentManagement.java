@@ -14,8 +14,8 @@ public class WebContentManagement {
 
     private static Logger _logger;
 
-    private CreateStructuresList createStructuresList;
-    private DeleteStructuresList deleteStructuresList;
+    private final CreateStructuresList createStructuresList;
+    private final DeleteStructuresList deleteStructuresList;
 
     public WebContentManagement() {
         _logger = LoggerFactory.getLogger(this.getClass().getName());
@@ -27,7 +27,7 @@ public class WebContentManagement {
     public void createStructures() {
         _logger.info("Checking if structures need to be created");
 
-        List<Structure> structures = createStructuresList.getStructures();
+        final List<Structure> structures = createStructuresList.getStructures();
 
         _logger.info("{} structures planned for creation", structures.size());
 
@@ -36,13 +36,30 @@ public class WebContentManagement {
             logMissingLocalesInNameMap(structure);
             logInvalidLocalesInNameMap(structure);
 
-            Try<DDMStructure> createdStructure = structure.addStructure();
+            final Try<DDMStructure> createdStructure = structure.addStructure();
             if (createdStructure.isSuccess()) {
                 _logger.info("Structure '{}' successfully created!", structure.getStructureKey());
             } else {
                 createdStructure.onFailure(
                         ex -> _logger.warn("Structure couldn't be created", ex)
                 );
+            }
+        }
+    }
+
+    public void deleteStructures() {
+        _logger.info("Checking if structures need to be deleted");
+
+        List<DDMStructure> structures = deleteStructuresList.getStructures();
+
+        _logger.info("{} structures planned for deletion", structures.size());
+
+        for (DDMStructure structure : structures) {
+            final Try<DDMStructure> deletedStructure = WebContentUtil.delete(structure);
+            if (deletedStructure.isSuccess()) {
+                _logger.info("Structure {} ({}) successfully deleted!", deletedStructure.get().getStructureKey(), deletedStructure.get().getStructureId());
+            } else {
+                _logger.warn("Structure {} ({}) could not be deleted", structure.getStructureKey(), structure.getStructureId());
             }
         }
     }

@@ -52,6 +52,7 @@ public class LiferayResourceInstaller {
     }
 
     private void setupWebContentManagement() {
+        webContentManagement.deleteStructures();
         webContentManagement.createStructures();
     }
 

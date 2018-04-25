@@ -15,8 +15,8 @@ public class SiteManagement {
 
     private static Logger _logger;
 
-    private CreateSitesList createSitesList;
-    private DeleteSitesList deleteSitesList;
+    private final CreateSitesList createSitesList;
+    private final DeleteSitesList deleteSitesList;
 
     public SiteManagement() {
         _logger = LoggerFactory.getLogger(this.getClass().getName());

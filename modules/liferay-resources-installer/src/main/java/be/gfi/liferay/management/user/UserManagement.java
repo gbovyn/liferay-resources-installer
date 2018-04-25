@@ -12,8 +12,8 @@ public class UserManagement {
 
     public static final boolean DELETE_ALL = true;
     private static Logger _logger;
-    private CreateUsersList createUsersList;
-    private DeleteUsersList deleteUsersList;
+    private final CreateUsersList createUsersList;
+    private final DeleteUsersList deleteUsersList;
 
     public UserManagement() {
         _logger = LoggerFactory.getLogger(this.getClass().getName());
