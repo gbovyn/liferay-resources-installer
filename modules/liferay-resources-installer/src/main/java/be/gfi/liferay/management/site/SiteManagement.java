@@ -48,14 +48,14 @@ public class SiteManagement {
     public void createSites() {
         _logger.info("Checking if sites need to be created");
 
-        List<Site> sitesToCreate = createSitesList.getSites();
+        final List<Site> sitesToCreate = createSitesList.getSites();
 
         _logger.info("{} sites planned for creation", sitesToCreate.size());
 
         for (Site site : sitesToCreate) {
             logInvalidLocalesInNameMap(site);
 
-            Try<com.liferay.portal.kernel.model.Group> createdGroup = site.addSite();
+            final Try<com.liferay.portal.kernel.model.Group> createdGroup = site.addSite();
             if (createdGroup.isSuccess()) {
                 _logger.info("Site '{}' ({}) successfully created!", createdGroup.get().getName(), createdGroup.get().getFriendlyURL());
             } else {
@@ -67,11 +67,11 @@ public class SiteManagement {
     }
 
     public void deleteSites() {
-        List<Group> sitesToDelete = deleteSitesList.getSites();
+        final List<Group> sitesToDelete = deleteSitesList.getSites();
         _logger.info("{} sites planned for deletion", sitesToDelete.size());
 
         for (com.liferay.portal.kernel.model.Group site : sitesToDelete) {
-            Try<com.liferay.portal.kernel.model.Group> liferaySite = SiteUtil.deleteSite(site);
+            final Try<com.liferay.portal.kernel.model.Group> liferaySite = SiteUtil.deleteSite(site);
             if (liferaySite.isSuccess()) {
                 _logger.info("Site {} ({}) successfully deleted!", liferaySite.get().getName(), liferaySite.get().getFriendlyURL());
             } else {
@@ -80,8 +80,8 @@ public class SiteManagement {
         }
     }
 
-    private void logInvalidLocalesInNameMap(Site site) {
-        Result<Locale> result = SiteUtil.verifyNameMap(site.getNameMap());
+    private void logInvalidLocalesInNameMap(final Site site) {
+        final Result<Locale> result = SiteUtil.verifyNameMap(site.getNameMap());
         for (Locale locale : result.getErrors()) {
             _logger.warn("Locale {} does not exist in Liferay", locale);
         }

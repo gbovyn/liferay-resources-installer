@@ -1,6 +1,7 @@
 package be.gfi.liferay.management.user;
 
 import be.gfi.liferay.utils.UserUtil;
+import com.google.common.collect.Lists;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +14,7 @@ class DeleteUsersList {
     }
 
     private List<com.liferay.portal.kernel.model.User> getUsersToDelete() {
-        List<com.liferay.portal.kernel.model.User> users = new ArrayList<>();
+        final List<com.liferay.portal.kernel.model.User> users = Lists.newArrayList();
 
         users.addAll(
                 getUsersByScreenName()
@@ -34,7 +35,7 @@ class DeleteUsersList {
     }
 
     private List<com.liferay.portal.kernel.model.User> getUsersByEmail() {
-        List<com.liferay.portal.kernel.model.User> users = new ArrayList<>();
+        final List<com.liferay.portal.kernel.model.User> users = Lists.newArrayList();
 
         for (int i = 5; i < 10; i++) {
             users.add(
@@ -46,7 +47,7 @@ class DeleteUsersList {
     }
 
     private List<String> getUsersScreenName() {
-        List<String> screenNames = new ArrayList<>();
+        final List<String> screenNames = Lists.newArrayList();
 
         for (int i = 0; i < 5; i++) {
             screenNames.add("jdoe" + i);

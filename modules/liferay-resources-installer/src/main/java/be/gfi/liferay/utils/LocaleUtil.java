@@ -3,10 +3,7 @@ package be.gfi.liferay.utils;
 import com.google.common.collect.Lists;
 import com.liferay.portal.kernel.language.LanguageUtil;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -33,11 +30,23 @@ public class LocaleUtil {
      * @return
      */
     public static List<Locale> getMissingLocales(final Map<Locale, String> nameMap, final long groupId) {
-        final List<Locale> availableLocales = getAvailableLocales(groupId);
+        final Set<Locale> availableLocales = getAvailableLocales(SiteUtil.getAvailableLanguageIds(groupId));
 
-        availableLocales.removeIf(nameMap::containsKey);
+        return availableLocales.stream()
+                .filter(locale -> !nameMap.keySet().contains(locale))
+                .collect(Collectors.toList());
+    }
 
-        return availableLocales;
+    public static Set<Locale> getAvailableLocales(final Set<String> languageIds) {
+        return languageIds.stream()
+                .map(LocaleUtil::getLocaleFromLanguageId)
+                .collect(Collectors.toSet());
+    }
+
+    private static Locale getLocaleFromLanguageId(String languageId) {
+        final String language = languageId.split("_")[0];
+        final String country = languageId.split("_")[1];
+        return new Locale(language, country);
     }
 
     /**

@@ -25,7 +25,7 @@ public class UserManagement {
     public void createUsers() {
         _logger.info("Checking if users need to be created");
 
-        List<User> usersToCreate = createUsersList.getUsers();
+        final List<User> usersToCreate = createUsersList.getUsers();
 
         _logger.info("{} users planned for creation", usersToCreate.size());
 
@@ -35,7 +35,7 @@ public class UserManagement {
                 continue;
             }
 
-            Try<com.liferay.portal.kernel.model.User> liferayUser = user.addUser();
+            final Try<com.liferay.portal.kernel.model.User> liferayUser = user.addUser();
             if (liferayUser.isSuccess()) {
                 _logger.info("User {} ({}) successfully created!", liferayUser.get().getScreenName(), liferayUser.get().getEmailAddress());
             } else {
@@ -49,8 +49,8 @@ public class UserManagement {
         deleteUsers(false);
     }
 
-    public void deleteUsers(boolean deleteAll) {
-        List<com.liferay.portal.kernel.model.User> usersToDelete;
+    public void deleteUsers(final boolean deleteAll) {
+        final List<com.liferay.portal.kernel.model.User> usersToDelete;
 
         if (deleteAll) {
             _logger.info("Deleting all users");
@@ -67,7 +67,7 @@ public class UserManagement {
                 continue;
             }
 
-            Try<com.liferay.portal.kernel.model.User> liferayUser = UserUtil.safeDeleteUser(user);
+            final Try<com.liferay.portal.kernel.model.User> liferayUser = UserUtil.safeDeleteUser(user);
             if (liferayUser.isSuccess()) {
                 _logger.info("User {} ({}) successfully deleted!", liferayUser.get().getScreenName(), liferayUser.get().getEmailAddress());
             } else {

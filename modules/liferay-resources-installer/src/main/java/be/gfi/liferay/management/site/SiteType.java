@@ -5,7 +5,7 @@ public enum SiteType {
 
     private final int value;
 
-    SiteType(int value) {
+    SiteType(final int value) {
         this.value = value;
     }
 }

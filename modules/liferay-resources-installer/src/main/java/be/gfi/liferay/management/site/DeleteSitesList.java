@@ -15,11 +15,11 @@ class DeleteSitesList {
     }
 
     private List<Group> getSitesToDelete() {
-        List<com.liferay.portal.kernel.model.Group> sites = Lists.newArrayList();
+        final List<com.liferay.portal.kernel.model.Group> sites = Lists.newArrayList();
 
         sites.addAll(getSitesByName());
 
-        Try<Group> site = getSiteByFriendlyUrl();
+        final Try<Group> site = getSiteByFriendlyUrl();
         site.onSuccess(
                 sites::add
         );
@@ -28,7 +28,7 @@ class DeleteSitesList {
     }
 
     private List<Group> getSitesByName() {
-        Try<Group> site = SiteUtil.getSiteByName("Test");
+        final Try<Group> site = SiteUtil.getSiteByName("Test");
         if (site.isSuccess()) {
             return Collections.singletonList(site.get());
         }

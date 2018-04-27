@@ -78,7 +78,7 @@ public class Site {
     }
 
     private ServiceContext getServiceContext() {
-        ServiceContext serviceContext = new ServiceContext();
+        final ServiceContext serviceContext = new ServiceContext();
 
         serviceContext.setAssetCategoryIds(assetCategoryIds);
         serviceContext.setAssetTagNames(assetTagNames);

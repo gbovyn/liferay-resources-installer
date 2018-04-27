@@ -1,6 +1,7 @@
 package be.gfi.liferay.resources.webcontent;
 
 
+import be.gfi.liferay.utils.SiteUtil;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
@@ -29,7 +30,7 @@ public class Structure {
     @Builder.Default
     private long userId = 0L;
     @Builder.Default
-    private long groupId = PortalUtil.getDefaultCompanyId();
+    private long groupId = SiteUtil.getDefaultGroupId();
     @Builder.Default
     private long parentStructureId = GroupConstants.DEFAULT_PARENT_GROUP_ID;
     @Builder.Default
@@ -58,14 +59,14 @@ public class Structure {
 
 
     public Try<DDMStructure> addStructure() {
-        Try<DDMForm> ddmForm = getDDMForm();
+        final Try<DDMForm> ddmForm = getDDMForm();
         if (ddmForm.isFailure()) {
             return Try.failure(
                     ddmForm.getCause()
             );
         }
 
-        Try<DDMFormLayout> ddmFormLayout = getDDMFormLayout();
+        final Try<DDMFormLayout> ddmFormLayout = getDDMFormLayout();
         if (ddmFormLayout.isFailure()) {
             return Try.failure(
                     ddmFormLayout.getCause()
@@ -97,7 +98,7 @@ public class Structure {
     }
 
     private Try<DDMFormLayout> getDDMFormLayout() {
-        Try<DDMForm> ddmForm = getDDMForm();
+        final Try<DDMForm> ddmForm = getDDMForm();
         if (ddmForm.isFailure()) {
             return Try.failure(
                     new IllegalArgumentException(

@@ -26,9 +26,9 @@ class CreateStructuresList {
     }
 
     private Structure getTestStructure() {
-        Try<String> exampleJson = ResourcesUtil.getContent("structures/example.json");
+        final Try<String> exampleJson = ResourcesUtil.getContent("structures/example.json");
 
-        Map<Locale, String> nameMap = ImmutableMap.<Locale, String>builder()
+        final Map<Locale, String> nameMap = ImmutableMap.<Locale, String>builder()
                 .put(new Locale("en", "US"), "New structure")
                 .put(new Locale("nl", "BE"), "Nieuw structuur")
                 .build();
@@ -38,14 +38,16 @@ class CreateStructuresList {
                 .structureKey("New structure")
                 .nameMap(nameMap)
                 .json(exampleJson.get())
+                .groupId(36531)
                 .build();
     }
 
     private long getTestUserId() {
-        Try<Long> defaultUserId = SiteUtil.getDefaultUserId();
+        final Try<Long> defaultUserId = SiteUtil.getDefaultUserId();
         if (defaultUserId.isSuccess()) {
             return defaultUserId.get();
         }
+
         return DEFAULT_USER_ID;
     }
 }

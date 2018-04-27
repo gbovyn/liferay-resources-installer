@@ -38,7 +38,10 @@ public class WebContentManagement {
 
             final Try<DDMStructure> createdStructure = structure.addStructure();
             if (createdStructure.isSuccess()) {
-                _logger.info("Structure '{}' successfully created!", structure.getStructureKey());
+                _logger.info("Structure '{}' ({}) successfully created",
+                        createdStructure.get().getStructureKey(),
+                        createdStructure.get().getStructureId()
+                );
             } else {
                 createdStructure.onFailure(
                         ex -> _logger.warn("Structure couldn't be created", ex)
@@ -54,14 +57,20 @@ public class WebContentManagement {
 
         _logger.info("{} structures planned for deletion", structures.size());
 
-        for (DDMStructure structure : structures) {
+        structures.forEach(structure -> {
             final Try<DDMStructure> deletedStructure = WebContentUtil.delete(structure);
             if (deletedStructure.isSuccess()) {
-                _logger.info("Structure {} ({}) successfully deleted!", deletedStructure.get().getStructureKey(), deletedStructure.get().getStructureId());
+                _logger.info("Structure '{}' ({}) successfully deleted",
+                        deletedStructure.get().getStructureKey(),
+                        deletedStructure.get().getStructureId()
+                );
             } else {
-                _logger.warn("Structure {} ({}) could not be deleted", structure.getStructureKey(), structure.getStructureId());
+                _logger.warn("Structure '{}' ({}) could not be deleted",
+                        structure.getStructureKey(),
+                        structure.getStructureId()
+                );
             }
-        }
+        });
     }
 
     public void createTemplates() {
@@ -76,24 +85,18 @@ public class WebContentManagement {
 
     }
 
-    private void logCorrectLocalesInNameMap(Structure structure) {
-        List<Locale> existingLocales = WebContentUtil.getExistingLocales(structure.getNameMap(), structure.getGroupId());
-        existingLocales.forEach(
-                locale -> _logger.info("The structure will be available in {}", locale)
-        );
+    private void logCorrectLocalesInNameMap(final Structure structure) {
+        final List<Locale> existingLocales = WebContentUtil.getExistingLocales(structure.getNameMap(), structure.getGroupId());
+        _logger.info("The structure will be available in {}", existingLocales);
     }
 
-    private void logMissingLocalesInNameMap(Structure structure) {
-        List<Locale> missingLocales = WebContentUtil.getMissingLocales(structure.getNameMap(), structure.getGroupId());
-        missingLocales.forEach(
-                locale -> _logger.warn("The structure will not be available in {}", locale)
-        );
+    private void logMissingLocalesInNameMap(final Structure structure) {
+        final List<Locale> missingLocales = WebContentUtil.getMissingLocales(structure.getNameMap(), structure.getGroupId());
+        _logger.warn("The structure will not be available in {}", missingLocales);
     }
 
-    private void logInvalidLocalesInNameMap(Structure structure) {
-        List<Locale> invalidLocales = WebContentUtil.getInvalidLocales(structure.getNameMap(), structure.getGroupId());
-        invalidLocales.forEach(
-                locale -> _logger.error("Locale {} does not exist for this Site", locale)
-        );
+    private void logInvalidLocalesInNameMap(final Structure structure) {
+        final List<Locale> invalidLocales = WebContentUtil.getInvalidLocales(structure.getNameMap(), structure.getGroupId());
+        _logger.error("Locale {} does not exist for this Site", invalidLocales);
     }
 }
