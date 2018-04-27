@@ -31,7 +31,7 @@ public class CreateSitesList {
     }
 
     private long getTestUserId() {
-        Try<Long> defaultUserId = SiteUtil.getDefaultUserId();
+        final Try<Long> defaultUserId = SiteUtil.getDefaultUserId();
         if (defaultUserId.isSuccess()) {
             return defaultUserId.get();
         }

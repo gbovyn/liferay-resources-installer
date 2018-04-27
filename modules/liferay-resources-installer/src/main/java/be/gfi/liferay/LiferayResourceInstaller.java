@@ -18,7 +18,7 @@ public class LiferayResourceInstaller {
     private final WebContentManagement webContentManagement;
 
     public LiferayResourceInstaller() {
-        _logger = LoggerFactory.getLogger(this.getClass().getName());
+        _logger = LoggerFactory.getLogger(getClass().getName());
 
         _logger.info("Started");
 

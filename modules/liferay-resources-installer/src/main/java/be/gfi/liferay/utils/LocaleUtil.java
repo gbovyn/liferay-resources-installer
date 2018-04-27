@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import com.liferay.portal.kernel.language.LanguageUtil;
 
 import java.util.*;
+import java.util.Map.Entry;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -35,7 +36,7 @@ public class LocaleUtil {
                 .collect(Collectors.toSet());
     }
 
-    private static Locale getLocaleFromLanguageId(String languageId) {
+    private static Locale getLocaleFromLanguageId(final String languageId) {
         return Locale.forLanguageTag(languageId.replace(UNDERSCORE, DASH));
     }
 
@@ -55,7 +56,7 @@ public class LocaleUtil {
     }
 
     public static List<Locale> getExistingLocales(final Map<Locale, String> nameMap, final long groupId) {
-        return getFilteredLocales(nameMap, (Locale locale) -> isAvailableLocale(locale, groupId));
+        return getFilteredLocales(nameMap, locale -> isAvailableLocale(locale, groupId));
     }
 
     public static List<Locale> getNonExistingLocales(final Map<Locale, String> nameMap) {
@@ -63,12 +64,12 @@ public class LocaleUtil {
     }
 
     private static List<Locale> getNonExistingLocales(final Map<Locale, String> nameMap, final long groupId) {
-        return getFilteredLocales(nameMap, (Locale locale) -> !isAvailableLocale(locale, groupId));
+        return getFilteredLocales(nameMap, locale -> !isAvailableLocale(locale, groupId));
     }
 
     private static List<Locale> getFilteredLocales(final Map<Locale, String> nameMap, final Predicate<Locale> localesFilter) {
         return nameMap.entrySet().stream()
-                .map(Map.Entry::getKey)
+                .map(Entry::getKey)
                 .filter(localesFilter)
                 .collect(Collectors.toList());
     }

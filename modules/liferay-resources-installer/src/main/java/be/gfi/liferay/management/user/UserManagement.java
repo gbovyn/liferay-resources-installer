@@ -16,7 +16,7 @@ public class UserManagement {
     private final DeleteUsersList deleteUsersList;
 
     public UserManagement() {
-        _logger = LoggerFactory.getLogger(this.getClass().getName());
+        _logger = LoggerFactory.getLogger(getClass().getName());
 
         createUsersList = new CreateUsersList();
         deleteUsersList = new DeleteUsersList();
@@ -29,7 +29,7 @@ public class UserManagement {
 
         _logger.info("{} users planned for creation", usersToCreate.size());
 
-        for (User user : usersToCreate) {
+        for (final User user : usersToCreate) {
             if (UserUtil.alreadyExists(user.getScreenName(), user.getEmailAddress())) {
                 _logger.warn("User {} ({}) already exists. Creation aborted", user.getScreenName(), user.getEmailAddress());
                 continue;
@@ -61,7 +61,7 @@ public class UserManagement {
 
         _logger.info("{} users planned for deletion", usersToDelete.size());
 
-        for (com.liferay.portal.kernel.model.User user : usersToDelete) {
+        for (final com.liferay.portal.kernel.model.User user : usersToDelete) {
             if (!UserUtil.alreadyExists(user.getScreenName(), user.getEmailAddress())) {
                 _logger.warn("User {} ({}) does not exist. Deletion aborted", user.getScreenName(), user.getEmailAddress());
                 continue;

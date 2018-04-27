@@ -16,36 +16,37 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import io.vavr.control.Try;
 import lombok.Builder;
+import lombok.Builder.Default;
 import lombok.Data;
 import lombok.NonNull;
 
+import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
 @Data
 @Builder
 public class Structure {
-    @Builder.Default
+    @Default
     private long userId = 0L;
-    @Builder.Default
+    @Default
     private long groupId = SiteUtil.getDefaultGroupId();
-    @Builder.Default
+    @Default
     private long parentStructureId = GroupConstants.DEFAULT_PARENT_GROUP_ID;
-    @Builder.Default
+    @Default
     private long classNameId = PortalUtil.getPortal().getClassNameId(JournalArticle.class);
-    @Builder.Default
+    @Default
     private String structureKey = StringPool.BLANK;
-    @Builder.Default
-    private Map<java.util.Locale, java.lang.String> nameMap = new HashMap<>();
-    @Builder.Default
-    private Map<Locale, String> descriptionMap = new HashMap<>();
+    @Default
+    private Map<Locale, String> nameMap = Collections.emptyMap();
+    @Default
+    private Map<Locale, String> descriptionMap = Collections.emptyMap();
     @NonNull
     private String json;
-    @Builder.Default
+    @Default
     private String storageType = StorageType.JSON.getValue();
-    @Builder.Default
+    @Default
     private int type = DDMStructureConstants.TYPE_DEFAULT;
 
     /*

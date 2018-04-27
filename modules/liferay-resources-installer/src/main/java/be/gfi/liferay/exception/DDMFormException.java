@@ -3,10 +3,9 @@ package be.gfi.liferay.exception;
 
 public class DDMFormException extends RuntimeException {
     public DDMFormException() {
-        super();
     }
 
-    public DDMFormException(String message) {
+    public DDMFormException(final String message) {
         super(message);
     }
 }

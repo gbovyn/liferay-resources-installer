@@ -2,18 +2,20 @@ package be.gfi.liferay.management.user;
 
 import be.gfi.liferay.utils.UserUtil;
 import com.google.common.collect.Lists;
+import com.liferay.portal.kernel.model.User;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 class DeleteUsersList {
 
-    List<com.liferay.portal.kernel.model.User> getUsers() {
+    List<User> getUsers() {
         return getUsersToDelete();
     }
 
-    private List<com.liferay.portal.kernel.model.User> getUsersToDelete() {
-        final List<com.liferay.portal.kernel.model.User> users = Lists.newArrayList();
+    private List<User> getUsersToDelete() {
+        final List<User> users = Lists.newArrayList();
 
         users.addAll(
                 getUsersByScreenName()
@@ -26,31 +28,25 @@ class DeleteUsersList {
         return users;
     }
 
-    private List<com.liferay.portal.kernel.model.User> getUsersByScreenName() {
+    private List<User> getUsersByScreenName() {
         return getUsersScreenName()
                 .stream()
                 .map(UserUtil::getUserByScreenName)
                 .collect(Collectors.toList());
     }
 
-    private List<com.liferay.portal.kernel.model.User> getUsersByEmail() {
-        final List<com.liferay.portal.kernel.model.User> users = Lists.newArrayList();
-
-        for (int i = 5; i < 10; i++) {
-            users.add(
-                    UserUtil.getUserByEmailAddress("j" + i + "@doe.com")
-            );
-        }
+    private List<User> getUsersByEmail() {
+        final List<User> users = IntStream.range(5, 10)
+                .mapToObj(i -> UserUtil.getUserByEmailAddress("j" + i + "@doe.com"))
+                .collect(Collectors.toList());
 
         return users;
     }
 
     private List<String> getUsersScreenName() {
-        final List<String> screenNames = Lists.newArrayList();
-
-        for (int i = 0; i < 5; i++) {
-            screenNames.add("jdoe" + i);
-        }
+        final List<String> screenNames = IntStream.range(0, 5)
+                .mapToObj(i -> "jdoe" + i)
+                .collect(Collectors.toList());
 
         return screenNames;
     }

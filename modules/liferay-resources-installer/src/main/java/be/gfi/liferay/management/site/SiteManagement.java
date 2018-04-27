@@ -19,7 +19,7 @@ public class SiteManagement {
     private final DeleteSitesList deleteSitesList;
 
     public SiteManagement() {
-        _logger = LoggerFactory.getLogger(this.getClass().getName());
+        _logger = LoggerFactory.getLogger(getClass().getName());
 
         createSitesList = new CreateSitesList();
         deleteSitesList = new DeleteSitesList();
@@ -37,11 +37,11 @@ public class SiteManagement {
 
     }
 
-    public static void enableStaging(long groupId) {
+    public static void enableStaging(final long groupId) {
 
     }
 
-    public static void disableStaging(long groupId) {
+    public static void disableStaging(final long groupId) {
 
     }
 
@@ -52,10 +52,10 @@ public class SiteManagement {
 
         _logger.info("{} sites planned for creation", sitesToCreate.size());
 
-        for (Site site : sitesToCreate) {
+        for (final Site site : sitesToCreate) {
             logInvalidLocalesInNameMap(site);
 
-            final Try<com.liferay.portal.kernel.model.Group> createdGroup = site.addSite();
+            final Try<Group> createdGroup = site.addSite();
             if (createdGroup.isSuccess()) {
                 _logger.info("Site '{}' ({}) successfully created!", createdGroup.get().getName(), createdGroup.get().getFriendlyURL());
             } else {
@@ -70,8 +70,8 @@ public class SiteManagement {
         final List<Group> sitesToDelete = deleteSitesList.getSites();
         _logger.info("{} sites planned for deletion", sitesToDelete.size());
 
-        for (com.liferay.portal.kernel.model.Group site : sitesToDelete) {
-            final Try<com.liferay.portal.kernel.model.Group> liferaySite = SiteUtil.deleteSite(site);
+        for (final Group site : sitesToDelete) {
+            final Try<Group> liferaySite = SiteUtil.deleteSite(site);
             if (liferaySite.isSuccess()) {
                 _logger.info("Site {} ({}) successfully deleted!", liferaySite.get().getName(), liferaySite.get().getFriendlyURL());
             } else {
@@ -82,7 +82,7 @@ public class SiteManagement {
 
     private void logInvalidLocalesInNameMap(final Site site) {
         final Result<Locale> result = SiteUtil.verifyNameMap(site.getNameMap());
-        for (Locale locale : result.getErrors()) {
+        for (final Locale locale : result.getErrors()) {
             _logger.warn("Locale {} does not exist in Liferay", locale);
         }
     }

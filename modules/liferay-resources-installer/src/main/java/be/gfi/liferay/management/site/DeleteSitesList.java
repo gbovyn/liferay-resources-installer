@@ -15,7 +15,7 @@ class DeleteSitesList {
     }
 
     private List<Group> getSitesToDelete() {
-        final List<com.liferay.portal.kernel.model.Group> sites = Lists.newArrayList();
+        final List<Group> sites = Lists.newArrayList();
 
         sites.addAll(getSitesByName());
 

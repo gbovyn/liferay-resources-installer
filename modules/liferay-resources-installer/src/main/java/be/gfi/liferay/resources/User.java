@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import io.vavr.control.Try;
 import lombok.Builder;
+import lombok.Builder.Default;
 import lombok.Data;
 import lombok.NonNull;
 import lombok.Singular;
@@ -24,52 +25,52 @@ import java.util.Locale;
 @Builder
 public class User {
 
-    @Builder.Default
+    @Default
     private long creatorUserId = 0L;
-    @Builder.Default
+    @Default
     private long companyId = PortalUtil.getDefaultCompanyId();
-    @Builder.Default
+    @Default
     private boolean autoPassword = false;
     private String password1;
     private String password2;
-    @Builder.Default
+    @Default
     private boolean autoScreenName = false;
     @NonNull
     private String screenName;
     @NonNull
     private String emailAddress;
     private long facebookId;
-    @Builder.Default
+    @Default
     private String openId = StringPool.BLANK;
-    @Builder.Default
+    @Default
     private Locale locale = Locale.US;
-    @Builder.Default
+    @Default
     private String firstName = StringPool.BLANK;
-    @Builder.Default
+    @Default
     private String middleName = StringPool.BLANK;
-    @Builder.Default
+    @Default
     private String lastName = StringPool.BLANK;
-    @Builder.Default
+    @Default
     private int prefixId = 0;
-    @Builder.Default
+    @Default
     private int suffixId = 0;
-    @Builder.Default
+    @Default
     private boolean male = true;
-    @Builder.Default
+    @Default
     private int birthdayMonth = Calendar.JANUARY;
-    @Builder.Default
+    @Default
     private int birthdayDay = 1;
-    @Builder.Default
+    @Default
     private int birthdayYear = 1970;
-    @Builder.Default
+    @Default
     private String jobTitle = StringPool.BLANK;
-    @Builder.Default
+    @Default
     private long[] groupIds = new long[]{};
-    @Builder.Default
+    @Default
     private long[] organizationIds = new long[]{};
-    @Builder.Default
+    @Default
     private long[] roleIds = new long[]{};
-    @Builder.Default
+    @Default
     private long[] userGroupIds = new long[]{};
     @Singular
     private List<Address> addresses;
@@ -81,17 +82,17 @@ public class User {
     private List<Website> websites;
     @Singular
     private List<AnnouncementsDelivery> announcementsDelivers;
-    @Builder.Default
+    @Default
     private boolean sendEmail = true;
 
     /*
      * ServiceContext attributes
      */
-    @Builder.Default
+    @Default
     private long[] assetCategoryIds = new long[]{};
-    @Builder.Default
+    @Default
     private String[] assetTagNames = new String[]{};
-    @Builder.Default
+    @Default
     private String uuid = StringPool.BLANK;
 
     public Try<com.liferay.portal.kernel.model.User> addUser() {

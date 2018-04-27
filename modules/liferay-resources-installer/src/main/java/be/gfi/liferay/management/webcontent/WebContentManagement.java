@@ -18,7 +18,7 @@ public class WebContentManagement {
     private final DeleteStructuresList deleteStructuresList;
 
     public WebContentManagement() {
-        _logger = LoggerFactory.getLogger(this.getClass().getName());
+        _logger = LoggerFactory.getLogger(getClass().getName());
 
         createStructuresList = new CreateStructuresList();
         deleteStructuresList = new DeleteStructuresList();
@@ -31,7 +31,7 @@ public class WebContentManagement {
 
         _logger.info("{} structures planned for creation", structures.size());
 
-        for (Structure structure : structures) {
+        for (final Structure structure : structures) {
             logCorrectLocalesInNameMap(structure);
             logMissingLocalesInNameMap(structure);
             logInvalidLocalesInNameMap(structure);
@@ -53,7 +53,7 @@ public class WebContentManagement {
     public void deleteStructures() {
         _logger.info("Checking if structures need to be deleted");
 
-        List<DDMStructure> structures = deleteStructuresList.getStructures();
+        final List<DDMStructure> structures = deleteStructuresList.getStructures();
 
         _logger.info("{} structures planned for deletion", structures.size());
 

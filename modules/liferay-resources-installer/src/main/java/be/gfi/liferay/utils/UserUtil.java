@@ -16,8 +16,7 @@ public class UserUtil {
     private static final long DEFAULT_COMPANY_ID = PortalUtil.getDefaultCompanyId();
 
     public static boolean alreadyExists(final String screenName, final String emailAddress) {
-        return UserUtil.getUserByScreenName(screenName) != null
-                || UserUtil.getUserByEmailAddress(emailAddress) != null;
+        return getUserByScreenName(screenName) != null || getUserByEmailAddress(emailAddress) != null;
     }
 
     public static List<User> getAllUsers() {
@@ -54,7 +53,7 @@ public class UserUtil {
         final List<User> deletedUsers = Lists.newArrayList();
         final List<User> notDeletedUsers = Lists.newArrayList();
 
-        for (User user : getAllUsers()) {
+        for (final User user : getAllUsers()) {
             final Try<User> userDeleted = safeDeleteUser(user.getUserId());
             if (userDeleted.isSuccess()) {
                 deletedUsers.add(
