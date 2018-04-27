@@ -101,7 +101,7 @@ public class WebContentManagement {
 
     private void logInvalidLocalesInNameMap(final Structure structure) {
         final List<Locale> invalidLocales = WebContentUtil.getInvalidLocales(structure.getNameMap(), structure.getGroupId());
-        if (invalidLocales.isEmpty()) {
+        if (!invalidLocales.isEmpty()) {
             _logger.error("Locale {} does not exist for this Site", invalidLocales);
         }
     }

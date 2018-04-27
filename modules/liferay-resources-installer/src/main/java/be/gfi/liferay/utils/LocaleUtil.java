@@ -11,16 +11,8 @@ public class LocaleUtil {
 
     private static final long NO_GROUP_ID = -1L;
 
-//    public static Result<Locale> verifyNameMap(Map<Locale, String> nameMap) {
-//        return verifyNameMap(nameMap, NO_GROUP_ID);
-//    }
-//
-//    public static Result<Locale> verifyNameMap(Map<Locale, String> nameMap, long groupId) {
-//        return Result.<Locale>builder()
-//                .success(getExistingLocales(nameMap, groupId))
-//                .errors(getNonExistingLocales(nameMap, groupId))
-//                .build();
-//    }
+    private static final String UNDERSCORE = "_";
+    private static final String DASH = "-";
 
     /**
      * Returns the locales available in the group but not added to the name map.
@@ -44,9 +36,7 @@ public class LocaleUtil {
     }
 
     private static Locale getLocaleFromLanguageId(String languageId) {
-        final String language = languageId.split("_")[0];
-        final String country = languageId.split("_")[1];
-        return new Locale(language, country);
+        return Locale.forLanguageTag(languageId.replace(UNDERSCORE, DASH));
     }
 
     /**
@@ -77,7 +67,8 @@ public class LocaleUtil {
     }
 
     private static List<Locale> getFilteredLocales(final Map<Locale, String> nameMap, final Predicate<Locale> localesFilter) {
-        return nameMap.entrySet().stream().map(Map.Entry::getKey)
+        return nameMap.entrySet().stream()
+                .map(Map.Entry::getKey)
                 .filter(localesFilter)
                 .collect(Collectors.toList());
     }
