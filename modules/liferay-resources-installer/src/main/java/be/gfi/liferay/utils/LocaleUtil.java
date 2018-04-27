@@ -2,18 +2,21 @@ package be.gfi.liferay.utils;
 
 import com.google.common.collect.Lists;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.StringPool;
 
-import java.util.*;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toSet;
 
 public class LocaleUtil {
 
     private static final long NO_GROUP_ID = -1L;
-
-    private static final String UNDERSCORE = "_";
-    private static final String DASH = "-";
 
     /**
      * Returns the locales available in the group but not added to the name map.
@@ -27,17 +30,17 @@ public class LocaleUtil {
 
         return availableLocales.stream()
                 .filter(locale -> !nameMap.keySet().contains(locale))
-                .collect(Collectors.toList());
+                .collect(toList());
     }
 
     public static Set<Locale> getAvailableLocales(final Set<String> languageIds) {
         return languageIds.stream()
                 .map(LocaleUtil::getLocaleFromLanguageId)
-                .collect(Collectors.toSet());
+                .collect(toSet());
     }
 
     private static Locale getLocaleFromLanguageId(final String languageId) {
-        return Locale.forLanguageTag(languageId.replace(UNDERSCORE, DASH));
+        return Locale.forLanguageTag(languageId.replace(StringPool.UNDERLINE, StringPool.DASH));
     }
 
     /**
@@ -71,7 +74,7 @@ public class LocaleUtil {
         return nameMap.entrySet().stream()
                 .map(Entry::getKey)
                 .filter(localesFilter)
-                .collect(Collectors.toList());
+                .collect(toList());
     }
 
     static boolean isAvailableLocale(final Locale locale) {
@@ -84,7 +87,7 @@ public class LocaleUtil {
         return availableLocales.contains(locale);
     }
 
-    private static ArrayList<Locale> getAvailableLocales(final long groupId) {
+    private static List<Locale> getAvailableLocales(final long groupId) {
         return Lists.newArrayList(
                 groupId != NO_GROUP_ID
                         ? LanguageUtil.getAvailableLocales()

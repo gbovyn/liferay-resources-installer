@@ -5,8 +5,9 @@ import com.google.common.collect.Lists;
 import com.liferay.portal.kernel.model.User;
 
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+
+import static java.util.stream.Collectors.toList;
 
 class DeleteUsersList {
 
@@ -32,13 +33,13 @@ class DeleteUsersList {
         return getUsersScreenName()
                 .stream()
                 .map(UserUtil::getUserByScreenName)
-                .collect(Collectors.toList());
+                .collect(toList());
     }
 
     private List<User> getUsersByEmail() {
         final List<User> users = IntStream.range(5, 10)
                 .mapToObj(i -> UserUtil.getUserByEmailAddress("j" + i + "@doe.com"))
-                .collect(Collectors.toList());
+                .collect(toList());
 
         return users;
     }
@@ -46,7 +47,7 @@ class DeleteUsersList {
     private List<String> getUsersScreenName() {
         final List<String> screenNames = IntStream.range(0, 5)
                 .mapToObj(i -> "jdoe" + i)
-                .collect(Collectors.toList());
+                .collect(toList());
 
         return screenNames;
     }

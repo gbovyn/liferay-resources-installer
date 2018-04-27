@@ -4,6 +4,7 @@ import be.gfi.liferay.helpers.Result;
 import com.google.common.collect.Sets;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -80,6 +81,6 @@ public class SiteUtil {
                 GroupLocalServiceUtil.getCompanyGroup(PortalUtil.getDefaultCompanyId())
         );
 
-        return companyGroup.isSuccess() ? companyGroup.get().getGroupId() : -1L;
+        return companyGroup.isSuccess() ? companyGroup.get().getGroupId() : GroupConstants.DEFAULT_LIVE_GROUP_ID;
     }
 }
