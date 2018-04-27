@@ -3,7 +3,6 @@ package be.gfi.liferay.management.user;
 import be.gfi.liferay.utils.UserUtil;
 import com.google.common.collect.Lists;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,7 +30,7 @@ class DeleteUsersList {
         return getUsersScreenName()
                 .stream()
                 .map(UserUtil::getUserByScreenName)
-                .collect(Collectors.toCollection(ArrayList::new));
+                .collect(Collectors.toList());
     }
 
     private List<com.liferay.portal.kernel.model.User> getUsersByEmail() {

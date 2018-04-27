@@ -5,7 +5,6 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import io.vavr.control.Try;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -34,7 +33,7 @@ public class WebContentUtil {
                 .filter(
                         ddmStructure -> ddmStructure.getStructureKey().equals(structureKey.toUpperCase())
                 )
-                .collect(Collectors.toCollection(ArrayList::new));
+                .collect(Collectors.toList());
     }
 
     public static Try<DDMStructure> delete(final DDMStructure structure) {

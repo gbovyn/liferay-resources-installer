@@ -60,26 +60,26 @@ public class LocaleUtil {
         return getNonExistingLocales(nameMap, groupId);
     }
 
-    public static ArrayList<Locale> getExistingLocales(final Map<Locale, String> nameMap) {
+    public static List<Locale> getExistingLocales(final Map<Locale, String> nameMap) {
         return getExistingLocales(nameMap, NO_GROUP_ID);
     }
 
-    public static ArrayList<Locale> getExistingLocales(final Map<Locale, String> nameMap, final long groupId) {
+    public static List<Locale> getExistingLocales(final Map<Locale, String> nameMap, final long groupId) {
         return getFilteredLocales(nameMap, (Locale locale) -> isAvailableLocale(locale, groupId));
     }
 
-    public static ArrayList<Locale> getNonExistingLocales(final Map<Locale, String> nameMap) {
+    public static List<Locale> getNonExistingLocales(final Map<Locale, String> nameMap) {
         return getNonExistingLocales(nameMap, NO_GROUP_ID);
     }
 
-    private static ArrayList<Locale> getNonExistingLocales(final Map<Locale, String> nameMap, final long groupId) {
+    private static List<Locale> getNonExistingLocales(final Map<Locale, String> nameMap, final long groupId) {
         return getFilteredLocales(nameMap, (Locale locale) -> !isAvailableLocale(locale, groupId));
     }
 
-    private static ArrayList<Locale> getFilteredLocales(final Map<Locale, String> nameMap, final Predicate<Locale> localesFilter) {
+    private static List<Locale> getFilteredLocales(final Map<Locale, String> nameMap, final Predicate<Locale> localesFilter) {
         return nameMap.entrySet().stream().map(Map.Entry::getKey)
                 .filter(localesFilter)
-                .collect(Collectors.toCollection(ArrayList::new));
+                .collect(Collectors.toList());
     }
 
     static boolean isAvailableLocale(final Locale locale) {

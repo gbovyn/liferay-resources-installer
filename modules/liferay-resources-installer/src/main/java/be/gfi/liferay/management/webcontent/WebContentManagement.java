@@ -87,16 +87,22 @@ public class WebContentManagement {
 
     private void logCorrectLocalesInNameMap(final Structure structure) {
         final List<Locale> existingLocales = WebContentUtil.getExistingLocales(structure.getNameMap(), structure.getGroupId());
-        _logger.info("The structure will be available in {}", existingLocales);
+        if (!existingLocales.isEmpty()) {
+            _logger.info("The structure will be available in {}", existingLocales);
+        }
     }
 
     private void logMissingLocalesInNameMap(final Structure structure) {
         final List<Locale> missingLocales = WebContentUtil.getMissingLocales(structure.getNameMap(), structure.getGroupId());
-        _logger.warn("The structure will not be available in {}", missingLocales);
+        if (!missingLocales.isEmpty()) {
+            _logger.warn("The structure will not be available in {}", missingLocales);
+        }
     }
 
     private void logInvalidLocalesInNameMap(final Structure structure) {
         final List<Locale> invalidLocales = WebContentUtil.getInvalidLocales(structure.getNameMap(), structure.getGroupId());
-        _logger.error("Locale {} does not exist for this Site", invalidLocales);
+        if (invalidLocales.isEmpty()) {
+            _logger.error("Locale {} does not exist for this Site", invalidLocales);
+        }
     }
 }
